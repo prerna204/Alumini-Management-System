@@ -28,16 +28,6 @@ The **Alumni Management System** is a web-based platform designed to enhance net
 npm install  # For Node.js backend
 pip install -r requirements.txt  # For Python backend
 ```
-
-#### Setup Database
-
-Configure database connection in `.env` file:
-
-```bash
-DB_HOST=your_database_host
-DB_USER=your_database_user
-DB_PASSWORD=your_database_password
-DB_NAME=alumni_management
 ```
 
 #### Run the Application
