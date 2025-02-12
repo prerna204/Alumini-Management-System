@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <div class="container">
+        <div class="back-button">
+            <a href="main.html">
+                <i class="fa-solid fa-arrow-left"></i> Back
+            </a>
+        </div>
+        <form id="profile-form" enctype="multipart/form-data">
+            <div class="profile-header">
+                <div class="profile-container">
+                    <div class="profile-picture">
+                        <img id="profile-pic" src="https://via.placeholder.com/150" alt="Profile Picture">
+                        <div class="update-overlay">
+                            <i class="fa-solid fa-camera"></i>
+                            <span>Update</span>
+                            <input type="file" id="upload-photo" name="profilePicture" accept="image/*">
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-info">
+                    <h2>Profile Details</h2>
+                    <label for="first-name">First Name:</label>
+                    <input type="text" id="first-name" name="firstName" placeholder="First name" required>
+
+                    <label for="last-name">Last Name:</label>
+                    <input type="text" id="last-name" name="lastName" placeholder="Last name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Alumni Details</div>
+                <table class="details-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Details</th>
+                    </tr>
+                    <tr>
+                        <td>Passing Year</td>
+                        <td><input type="text" name="passingYear" placeholder="Year" class="input" required></td>
+                    </tr>
+                    <tr>
+                        <td>Branch</td>
+                        <td><input type="text" name="branch" placeholder="Branch" class="input" required></td>
+                    </tr>
+                    <tr>
+                        <td>Company</td>
+                        <td><input type="text" name="company" placeholder="Company" class="input"></td>
+                    </tr>
+                    <tr>
+                        <td>Designation</td>
+                        <td><input type="text" name="designation" placeholder="Designation" class="input"></td>
+                    </tr>
+                    <tr>
+                        <td>LinkedIn URL</td>
+                        <td><input type="text" name="linkedIn" placeholder="LinkedIn URL" class="input"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Achievements & Activities</div>
+                <ul id="achievements-list">
+                    <li>
+                        <input type="text" name="achievement" placeholder="Achievement or activity" class="input">
+                    </li>
+                </ul>
+                <button type="button" id="add-achievement">Add Achievement</button>
+            </div>
+
+            <div class="section4">
+                <button type="submit">Save/Update Profile</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const uploadPhoto = document.getElementById('upload-photo');
+        const profilePic = document.getElementById('profile-pic');
+        const form = document.getElementById('profile-form');
+        const achievementsList = document.getElementById('achievements-list');
+        const addAchievementButton = document.getElementById('add-achievement');
+
+        // Load email from localStorage
+        document.addEventListener("DOMContentLoaded", () => {
+            const emailInput = document.getElementById("email");
+            const storedUsername = localStorage.getItem("username");
+            if (storedUsername) {
+                emailInput.value = storedUsername;
+            }
+        });
+
+        // Preview uploaded image
+        uploadPhoto.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    profilePic.src = reader.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Add new achievement input field
+        addAchievementButton.addEventListener('click', () => {
+            const newField = document.createElement('li');
+            newField.innerHTML = `
+                <input type="text" name="achievement" placeholder="Achievement or activity" class="input">
+                <button type="button" class="remove-achievement">Cancel</button>
+            `;
+            achievementsList.appendChild(newField);
+
+            // Attach event listener to the remove button
+            const removeButton = newField.querySelector('.remove-achievement');
+            removeButton.addEventListener('click', () => {
+                newField.remove();
+            });
+        });
+
+        // Submit form
+        form.addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent default form submission
+    const formData = new FormData(form);
+
+    // Collect all achievements as simple text
+    const achievements = [];
+    document.querySelectorAll('input[name="achievement"]').forEach(input => {
+        if (input.value) achievements.push(input.value);
+    });
+    formData.append('achievement', achievements.join(', '));
+    
+
+    try {
+        const response = await fetch('http://localhost:3000/save-profile', {
+            method: 'POST',
+            body: formData,
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            alert('Profile saved successfully!');
+            window.location.href = 'main.html';
+        } else {
+            alert('Error saving profile: ' + result.message); // Display the error message from server
+        }
+    } catch (error) {
+        console.error(error);
+        alert('An error occurred while saving the profile.');
+    }
+});
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Feedback</title>
+    <link rel="stylesheet" href="feedback.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="back-button">
+        <a href="main.html">
+            <i class="fa-solid fa-arrow-left"></i> Back
+        </a>
+    </div>
+    
+    <div class="feedback-container">
+
+        <div class="feedback">
+            <h1 class="feedback_h1">FEEDBACK</h1>
+            <p>We value your feedback to improve the alumni network platform. Share your thoughts, suggestions, and ideas with us.</p>
+            <div class="Subject1">
+                <label for="subject">Subject:</label>
+            <input type="text" class="subject" id="subject" placeholder="Write the subject of Feedback">
+            </div>
+            <textarea placeholder="Write your feedback here...." class="area"></textarea>
+            <button class="feed_submit">Submit</button>
+            <!-- <hr class="separation1"> -->
+
+            <div class="about_us">
+                <div class="contact_img">
+                    <img src="images/contact_us.gif" alt="Contact Us Image">
+                </div>
+                </div>
+        </div>
+        <div class="img">
+            <img src="images/feedback_gif.gif" alt="Feedback Image">
+
+            <div class="contact-container">
+                <h1 class="contact_h1">CONTACT US</h1>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:prernakhatri204@gmail.com">jspm123@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <a href="tel:+1234567890">+1 234 567 890</a>
+                </div>
+                <h3 class="location">Location:</h3>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3780.9772677539167!2d73.74719739999999!3d18.6200922!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bbbc138acb7b%3A0x67043867a211a31d!2sJSPM%20Rajarshi%20Shahu%20College%20Of%20Engineering%20%2C%20Tathawade!5e0!3m2!1sen!2sin!4v1736950687936!5m2!1sen!2sin" width="300" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal" id="feedback-modal">
+        <div class="modal-content">
+            <h2 id="modal-title"></h2>
+            <p id="modal-message"></p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        
+        function showModal(title, message) {
+            const modal = document.getElementById('feedback-modal');
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            modal.style.display = 'flex';
+        }
+
+        
+        function closeModal() {
+            document.getElementById('feedback-modal').style.display = 'none';
+        }
+
+       
+        document.addEventListener('DOMContentLoaded', () => {
+    const submitButton = document.querySelector('.feed_submit');
+    submitButton.addEventListener('click', async () => {
+        const subject = document.querySelector('.subject').value.trim();
+        const feedback = document.querySelector('.area').value.trim();
+
+        if (!subject || !feedback) {
+            showModal('Error', 'Please fill in both fields.');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:3000/submit-feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ subject, feedback }),
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                showModal('Success', result.message);
+                document.querySelector('.subject').value = '';
+                document.querySelector('.area').value = '';
+            } else {
+                showModal('Error', result.error || 'An error occurred. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error submitting feedback:', error);
+            showModal('Error', 'Failed to submit feedback. Please check your connection and try again.');
+        }
+    });
+});
+
+    </script>
+</body>
+</html>

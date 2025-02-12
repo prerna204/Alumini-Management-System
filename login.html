@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alumni Network</title>
+  <link rel="stylesheet" href="login.css">
+  <link rel="icon" type="image/x-icon" href="images/logo.jpg">
+</head>
+<body class="login_body">
+
+  <div class="container">
+    <div class="form-container">
+      <div id="login-form">
+        <h1>Beyond Campus</h1>
+        <hr class="line">
+        <h2>Login</h2>
+        <form onsubmit="handleFormSubmit(event, 'login')">
+          <label for="login-username">Email:</label>
+          <input type="email" id="login-username" name="username" placeholder="Enter your email" required />
+          <label for="login-password">Password:</label>
+          <input type="password" id="login-password" name="password" placeholder="Enter your password" required />
+          <button type="submit">Login</button>
+        </form>
+        <br>
+        <p class="button-row">
+          <span class="Account">Don't have an account?<span class="register-line"> Register Now!</span></span>
+          <a href="#" onclick="showForm('register')">Register</a>
+          <a href="#" onclick="showForm('forgot')">Forgot Password?</a>
+        </p>
+      </div>
+
+      <div id="register-form" style="display: none;">
+        <h2>Register</h2>
+        <form onsubmit="handleFormSubmit(event, 'register')">
+          <label for="register-username">Email:</label>
+          <input type="email" id="register-username" name="username" placeholder="Enter your email" required />
+          <label for="register-password">Password:</label>
+          <input type="password" id="register-password" name="password" placeholder="Choose a password" required />
+          <label for="register-security-question">Security Question:</label>
+          <input type="text" id="register-security-question" name="securityQuestion" placeholder="Enter a security question" required />
+          <label for="register-security-answer">Answer to Security Question:</label>
+          <input type="text" id="register-security-answer" name="securityAnswer" placeholder="Enter the answer" required />
+          <button type="submit">Register</button>
+        </form>
+        <button class="back_login" onclick="showForm('login')">Back to Login</button>
+      </div>
+
+      <div id="forgot-form" style="display: none;">
+        <h2>Forgot Password</h2>
+        <form onsubmit="handleFormSubmit(event, 'forgot')">
+          <label for="forgot-username">Email:</label>
+          <input
+            type="email"
+            id="forgot-username"
+            name="username"
+            placeholder="Enter your email"
+            required
+            oninput="fetchSecurityQuestion(this.value)"
+          />
+          <label for="forgot-security-answer">Answer to Security Question:</label>
+          <input
+            type="text"
+            id="forgot-security-answer"
+            name="securityAnswer"
+            placeholder="Enter the answer"
+            required
+          />
+          <button type="submit">Generate New Password</button>
+        </form>
+        <button class="back_login" onclick="showForm('login')">Back to Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Structure for Alerts -->
+  <div id="alertModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <p id="modal-message"></p>
+    </div>
+  </div>
+  <!-- Loading Screen (Initially Hidden) -->
+<div id="loadingScreen" class="loading-screen" style="display: none;">
+  <img src="loading2.gif" alt="Loading..." />
+  <p>Loading... Please wait</p>
+</div>
+
+  
+
+  
+
+
+  <script>
+    // async function handleFormSubmit(event, action) {
+    //   event.preventDefault();
+    //   const formData = new FormData(event.target);
+
+    //   let url = "";
+    //   let body = {};
+    //   let showOkButton = false;
+    //   let alertDuration = 3000;
+
+    //   switch (action) {
+    //     case "login":
+    //       url = "http://localhost:3000/login";
+    //       body = {
+    //         username: formData.get("username"),
+    //         password: formData.get("password"),
+    //       };
+    //       break;
+    //     case "register":
+    //       url = "http://localhost:3000/register";
+    //       body = {
+    //         username: formData.get("username"),
+    //         password: formData.get("password"),
+    //         securityQuestion: formData.get("securityQuestion"),
+    //         securityAnswer: formData.get("securityAnswer"),
+    //       };
+    //       break;
+    //     case "forgot":
+    //       url = "http://localhost:3000/forgot-password";
+    //       body = {
+    //         username: formData.get("username"),
+    //         securityAnswer: formData.get("securityAnswer"),
+    //       };
+    //       showOkButton = true;
+    //       alertDuration = 10000;
+    //       break;
+    //   }
+
+    //   try {
+    //     const response = await fetch(url, {
+    //       method: "POST",
+    //       headers: { "Content-Type": "application/json" },
+    //       body: JSON.stringify(body),
+    //     });
+
+    //     const data = await response.json();
+    //     if (response.ok) {
+    //       showAlert('success', data.message, showOkButton, alertDuration);
+
+    //       if (action === "login") {
+    //         localStorage.setItem("username", body.username);
+    //         setTimeout(() => {
+    //           window.location.href = data.profileExists ? "main.html" : "profile.html";
+    //         }, 1500);
+    //       }
+    //     } else {
+    //       showAlert('error', data.error, showOkButton, alertDuration);
+    //     }
+    //   } catch (error) {
+    //     showAlert('error', "An error occurred. Please try again.", showOkButton, alertDuration);
+    //   }
+    // }
+    async function handleFormSubmit(event, action) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+
+  let url = "";
+  let body = {};
+  let showOkButton = false;
+  let alertDuration = 3000;
+
+  switch (action) {
+    case "login":
+      url = "http://localhost:3000/login";
+      body = {
+        username: formData.get("username"),
+        password: formData.get("password"),
+      };
+      break;
+    case "register":
+      url = "http://localhost:3000/register";
+      body = {
+        username: formData.get("username"),
+        password: formData.get("password"),
+        securityQuestion: formData.get("securityQuestion"),
+        securityAnswer: formData.get("securityAnswer"),
+      };
+      break;
+    case "forgot":
+      url = "http://localhost:3000/forgot-password";
+      body = {
+        username: formData.get("username"),
+        securityAnswer: formData.get("securityAnswer"),
+      };
+      showOkButton = true;
+      alertDuration = 10000;
+      break;
+  }
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      showAlert("success", data.message, showOkButton, alertDuration);
+
+      if (action === "login") {
+        localStorage.setItem("username", body.username);
+
+        // Hide modal and show loading screen after 2 seconds
+        setTimeout(() => {
+          closeModal();
+          document.getElementById("loadingScreen").style.display = "flex"; // Show loading screen
+        }, 2000); // 2s delay for the success message
+
+        // Redirect after 4 seconds of loading screen
+        setTimeout(() => {
+          window.location.href = data.profileExists ? "main.html" : "profile.html";
+        }, 6000); // 2s delay + 4s loading = 6s total
+      }
+    } else {
+      showAlert("error", data.error, showOkButton, alertDuration);
+    }
+  } catch (error) {
+    showAlert("error", "An error occurred. Please try again.", showOkButton, alertDuration);
+  }
+}
+
+
+
+    function showAlert(type, message, showOkButton, duration) {
+      const modal = document.getElementById("alertModal");
+      const messageContainer = document.getElementById("modal-message");
+
+      messageContainer.innerHTML = `<span class="${type}">${message}</span>`;
+      modal.style.display = "block";
+
+      if (!showOkButton) {
+        setTimeout(() => {
+          closeModal();
+        }, duration);
+      }
+    }
+
+    function closeModal() {
+      document.getElementById("alertModal").style.display = "none";
+    }
+
+    function showForm(formId) {
+      document.getElementById("login-form").style.display = formId === "login" ? "block" : "none";
+      document.getElementById("register-form").style.display = formId === "register" ? "block" : "none";
+      document.getElementById("forgot-form").style.display = formId === "forgot" ? "block" : "none";
+    }
+
+    async function fetchSecurityQuestion(username) {
+      if (!username) {
+        document.getElementById("forgot-security-answer").placeholder = "Enter the answer to your security question";
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:3000/security-question/${username}`);
+        if (response.ok) {
+          const data = await response.json();
+          document.getElementById("forgot-security-answer").placeholder = data.securityQuestion;
+        } else {
+          document.getElementById("forgot-security-answer").placeholder = "Enter the answer to your security question";
+        }
+      } catch (error) {
+        document.getElementById("forgot-security-answer").placeholder = "Enter the answer to your security question";
+      }
+    }
+  </script>
+
+</body>
+</html>

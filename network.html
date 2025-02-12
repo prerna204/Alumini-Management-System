@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network</title>
+    <link rel="stylesheet" href="network.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="back-button">
+        <a href="main.html">
+            <i class="fa-solid fa-arrow-left"></i> Back
+        </a>
+    </div>
+    
+    <div class="container">
+        <nav class="navbar">
+            <a href="#" class="logo">Beyond Campus</a>
+            <div class="search-bar">
+                <select id="search-type">
+                    <option value="name">Name</option>
+                    <option value="batch">Batch</option>
+                    <option value="company">Company</option>
+                </select>
+                <input type="text" id="search-query" placeholder="Search here...">
+                <button id="search-btn">Search</button>
+            </div>
+        </nav>
+        
+        <div class="list-cards" id="list-cards">
+            
+        </div>
+    </div>
+
+    <script>
+      document.getElementById("search-btn").addEventListener("click", async () => {
+    const type = document.getElementById("search-type").value;
+    const query = document.getElementById("search-query").value.trim();
+    
+    if (!query) return;
+    
+    try {
+        const response = await fetch(`http://localhost:3000/search?type=${type}&query=${query}`);
+        const profiles = await response.json();
+        const listCards = document.getElementById("list-cards");
+        listCards.innerHTML = "";//clearing previous result
+
+        if (profiles.length === 0) {
+            listCards.innerHTML = "<p>No results found</p>";
+            return;
+        }
+
+        profiles.forEach(profile => {
+            const card = document.createElement("div");
+            card.classList.add("card");
+            card.innerHTML = `
+                <div class="profile">
+                    <img src="${profile.profile_pic && profile.profile_pic.trim() ? profile.profile_pic : 'default-profile.jpg'}" 
+     alt="${profile.first_name}" 
+     onerror="this.onerror=null; this.src='default_profile.jpg';"
+     style="width:100%">
+
+                </div>
+                <div class="des">
+                    <h3>Name: ${profile.first_name} ${profile.last_name}</h3>
+                    <h3>Batch: ${profile.passing_year}</h3>
+                   <div class="button_layout">
+                    <a href="${profile.linkedin}" class="btn-linkedin" target="_blank">Connect with LinkedIn</a>
+                    <button class="more-info-btn">More Info</button>
+                    </div>
+                    <div class="more-info">
+                        <p><strong>Designation:</strong> ${profile.designation || 'N/A'}</p>
+                        <p><strong>Company:</strong> ${profile.company || 'N/A'}</p>
+                        <p><strong>Email:</strong> ${profile.email || 'N/A'}</p>
+ <p><strong>Achievements:</strong> 
+  ${profile.achievements.length > 0 
+    ? [...new Set(
+        profile.achievements
+          .flatMap(a => a.split(",")) // Split combined entries
+          .map(a => a.trim().replace(/[^a-zA-Z0-9 ]/g, "")) // Trim & remove special characters
+      )].join(", ") 
+    : "N/A"}
+</p>
+
+
+</p>
+
+                    </div>
+                </div>
+            `;
+            listCards.appendChild(card);
+        });
+
+        document.querySelectorAll(".more-info-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                const card = this.closest('.card');
+                card.classList.toggle("expanded"); // Toggle expanded class to reveal more info
+            });
+        });
+
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+});
+
+    </script>
+</body>
+</html>

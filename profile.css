@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+*
+{
+  font-family: "Oswald", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FF3CAC;
+    background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
+}
+
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.back-button a {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    color: #333;
+    text-decoration: none;
+    background-color: #f1f1f1;
+    padding: 8px 12px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in;
+}
+
+.back-button a i {
+    margin-right: 5px;
+    color: #e80404;
+}
+
+.back-button a:hover {
+    background-color: #969696;
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content:space-evenly;
+    margin-bottom: 20px;
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* height: 200px;
+    width: 350px; */
+    margin-right: 50px;
+}
+
+.profile-picture {
+    position: relative;
+    width: 250px;
+    height: 250px; 
+    border-radius: 50%;
+    overflow: hidden;
+    background: #ccc;
+}
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.update-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.update-overlay input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    flex: 1;
+}
+
+.profile-info h2 {
+    margin-bottom: 15px;
+}
+
+.profile-info label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.profile-info input {
+    width: 90%;
+    padding: 6px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+.details-table th, .details-table td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.details-table th {
+    background-color: #f9f9f9;
+}
+
+.input {
+    width: 90%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.section4{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+.section4 button{
+    background-color: #2B86C5;
+    color: #ffffff;
+    height: 2.5rem;
+    width: 15rem;
+    border: none;
+    border-radius: 10px;
+    transition:all 0.5s ease-in-out;
+    font-weight: bold;
+  
+}
+
+.section4 button:hover{
+    background-color: #ffffff;
+    color: #2B86C5;
+    border: 2px solid #2B86C5;
+}
+
+
+button {
+    background-color: #2B86C5; 
+    color: #fff; 
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+#add-achievement {
+    margin-top: 10px;
+    display: inline-block;
+}
+
+
+#add-achievement:hover {
+    background-color: #024c9c;
+}
+
+
+
+.remove-achievement {
+    background-color: #dc3545; 
+    color: #fff; 
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remove-achievement:hover {
+    background-color: #a71d2a; 
+}
+
+
+#achievements-list .input {
+    margin-bottom: 5px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 70%;
+}
+
+/* Optional: Align achievement input and cancel button */
+#achievements-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}

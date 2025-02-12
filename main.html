@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" type="image/x-icon" href="images/logo.jpg">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Beyond Campus</span>
+            </div>
+            <div class="links">
+                <a href="main.html">HOME</a>
+                <a href="network.html">SEARCH PROFILE</a>
+                <a href="feedback.html">SUPPORT</a>
+                <a href="profile.html">UPDATE PROFILE</a>
+                <a href="announc.html">ANNOUNCEMENT</a>
+            </div>
+            <div class="user-info">
+              <span id="username-display"></span>
+          </div>
+            <button onclick="logout()" class="logout-btn">LOGOUT</button>
+        </div>
+        <div>
+          <marquee class="blink"> <pre>This website is still under development contact support for any queries. <span class="marque1">                      Please update the profiles periodically for better connections</span>                    Click on Logout button to Go back to login page.  </pre>  </marquee>
+        </div>
+        <div class="tag">
+            <h2>Welcome to the JSPM's Alumni Portal: Bridging the Past, Present, and Future</h2>
+        </div>
+        
+        <div class="content">
+            <div class="des">
+                <h3>The JSPM Alumni Portal is an integrated platform aimed at fostering strong connections between alumni, current students, and faculty members of JSPM institutions. This portal serves as a formal network to facilitate professional engagement, knowledge sharing, and collaboration among its members.
+
+                    Through the portal, alumni can update their career information, participate in institutional events, explore professional opportunities, and contribute to the growth of the academic community. It also acts as a bridge for current students and faculty to access mentorship, career guidance, and industry insights from alumni, thereby enhancing their academic and professional development.</h3>
+                    <a href="network.html" class="search-btn">Search Profile</a>
+
+                  </div>
+
+                  
+                 
+            <title>Swiper Example</title>
+            <!-- Swiper CSS -->
+            <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+            <style>
+          
+              .swiper {
+                margin-top: 40px;
+                width: 100%;
+                max-width: 550px;
+                height: 300px;
+              }
+          
+              .swiper-slide {
+                text-align: center;
+                font-size: 18px;
+                background: rgb(201, 193, 193);
+          
+                /* Center slide text vertically */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+            </style>
+          </head>
+          <body>
+           <!-- Swiper -->
+<div class="swiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">
+      <img src="images/alumini1.jpg" alt="Slide 1" style="width: 100%; height: auto;">
+    </div>
+    <div class="swiper-slide">
+      <img src="images/alumini 2.jpg" alt="Slide 2" style="width: 100%; height: auto;">
+    </div>
+    <div class="swiper-slide">
+      <img src="images/alumini 3.jpg" alt="Slide 3" style="width: 100%; height: auto;">
+    </div>
+    <div class="swiper-slide">
+      <img src="images/alumini4.jpg" alt="Slide 3" style="width: 100%; height: 100%;">
+    </div>
+    <div class="swiper-slide">
+      <img src="images/alumini5.jpg" alt="Slide 3" style="width: 100%; height:100%;">
+    </div>
+    <div class="swiper-slide">
+      <img src="images/alumini6.jpg" alt="Slide 3" style="width: 100%; height: auto;">
+    </div>
+
+  </div>
+  <!-- Pagination -->
+  <div class="swiper-pagination"></div>
+</div>
+
+
+            <!-- Swiper JS -->
+            <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+            <script>
+              const swiper = new Swiper('.swiper', {
+                pagination: {
+                  el: '.swiper-pagination',
+                  dynamicBullets: true,
+                },
+                autoplay: {
+                delay: 3000, // Slide will change every 3 seconds
+                disableOnInteraction: false, // Autoplay won't stop on user interaction
+      },
+      loop: true,
+              });
+
+
+              function counterAnimation() {
+      const counters = document.querySelectorAll('.counter');
+
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        let count = 0;
+        const speed = Math.ceil(target / 100);
+
+        function updateCount() {
+          if (count < target) {
+            count += speed;
+            if (count > target) count = target;
+            counter.innerText = count;
+            setTimeout(updateCount, 20);
+          }
+        }
+
+        const inView = () => {
+          const rect = counter.getBoundingClientRect();
+          return rect.top <= window.innerHeight && rect.bottom >= 0;
+        };
+
+        window.addEventListener('scroll', () => {
+          if (inView() && counter.innerText === '0') {
+            updateCount();
+          }
+        });
+
+        if (inView() && counter.innerText === '0') {
+          updateCount();
+        }
+      });
+    }
+    
+    
+document.addEventListener("DOMContentLoaded", () => {
+    const usernameDisplay = document.getElementById("username-display");
+    const storedUsername = localStorage.getItem("username");
+
+    if (storedUsername) {
+        usernameDisplay.textContent = `Logged in as: ${storedUsername}`;
+    } else {
+        usernameDisplay.textContent = "Not logged in";
+    }
+});
+
+
+    document.addEventListener('DOMContentLoaded', counterAnimation);
+
+    function logout() {
+            alert("Logout successful!");
+            window.location.href = "login.html"; // Redirect to the login page
+        }
+            </script>
+          </body>
+        </div>
+        
+        <hr class="separator">
+        <h2 class="company_name">Our Alumini Outreach</h2>
+        <div class="div2">
+          <div class="logo-slider">
+            <div class="slider-track">
+              <div class="slide"><img src="images/Adobe.webp" alt="Company 1"></div>
+              <div class="slide"><img src="images/capgemini-logo-300.png" alt="Company 2" width="100px" height="150px" ></div>
+              <div class="slide"><img src="images/google-logo.png" alt="Company 3"></div>
+              <div class="slide"><img src="images/microdoft.png" alt="Company 4"></div>
+              <div class="slide"><img src="images/Cognizant-Logo-1200x675.webp" alt="Company 5"></div>
+              <div class="slide"><img src="images/OIF.jpeg" alt="Company 6"></div>
+              <div class="slide"><img src="images/R (1).jpeg" width="100px" height="100px" alt="Company 6"></div>
+              <div class="slide"><img src="images/R.jpeg" alt="Company 5"  width="100px" height="100px" ></div>
+              <div class="slide"><img src="images/veritas-technologies.jpg" alt="Company 1" width="100px" height="100px"></div>
+            <div class="slide"><img src="images/airbus.jpg" alt="Company10" width="110px" height="80px" ></div>
+            <div class="slide"><img src="images/data_axle.jpg" alt="Company11" width="100px" height="100px" ></div>
+            <div class="slide"><img src="images/deloitte.png" alt="Company12"width="100px" height="100px"></div>
+            <div class="slide"><img src="images/drdo.webp" alt="Company13" width="100px" height="100px" ></div>
+            <div class="slide"><img src="images/goldman_sachs.jpg" alt="Comapny14" width="100px" height="100px" ></div>
+            <div class="slide"><img src="images/isro.jpg" alt="Company15" width="80px" height="80px" ></div>
+            <div class="slide"><img src="images/ninja.jpg" alt="Company16" width="80px" height="80px" ></div>
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="numbers">
+          <div class="counters">
+            <div class="counter-card">
+              <div class="counter" data-target="15000">0</div>
+              <div class="label">Alumini Passed</div>
+            </div>
+            <div class="counter-card">
+              <div class="counter" data-target="12500">0</div>
+              <div class="label">Alumini Placed</div>
+            </div>
+            <div class="counter-card">
+              <div class="counter" data-target="105">0</div>
+              <div class="label">Startups</div>
+            </div>
+            <div class="counter-card">
+              <div class="counter" data-target="4000">0</div>
+              <div class="label">Post Graduation</div>
+            </div>
+            <div class="counter-card">
+              <div class="counter" data-target="250">0</div>
+              <div class="label">PhDs</div>
+            </div>
+              </div>
+        </div>
+      
+      
+        </div>
+
+        <footer class="footer">
+          <div class="footer-container">
+              <div class="footer-about">
+                  <h3>About JSPM Alumni Portal</h3>
+                  <p>
+                      The JSPM Alumni Portal aims to connect alumni, current students, and faculty members, fostering collaboration and professional growth.
+                  </p>
+              </div>
+             
+          </div>
+          <div class="footer-bottom">
+              <p>&copy;All Rights Reserved with the developers. SOHAM,PRERNA,CHAITANYA</p>
+          </div>
+      </footer>
+       
+</body>
+
+</html>
