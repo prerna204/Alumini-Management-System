@@ -34,7 +34,6 @@ pip install -r requirements.txt  # For Python backend
 
 ```bash
 npm start  # For Node.js backend
-python manage.py runserver  # For Django backend
 ```
 
 #### Access the Application
